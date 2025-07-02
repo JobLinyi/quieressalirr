@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres salir conmigo?</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffebee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            transition: background-color 0.5s;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        h1 {
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+        
+        .image-container {
+            margin: 20px 0;
+        }
+        
+        .image-container img {
+            max-width: 200px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-yes {
+            background-color: #4caf50;
+            color: white;
+        }
+        
+        .btn-yes:hover {
+            background-color: #388e3c;
+            transform: scale(1.05);
+        }
+        
+        .btn-no {
+            background-color: #f44336;
+            color: white;
+            position: relative;
+        }
+        
+        .btn-no:hover {
+            background-color: #d32f2f;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #e91e63;
+            font-weight: bold;
+            min-height: 27px;
+        }
+        
+        .heart {
+            color: #e91e63;
+            font-size: 24px;
+            margin: 0 5px;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="question-container">
+        <h1>¿Quieres salir conmigo? <span class="heart">❤️</span></h1>
+        
+        <div class="image-container">
+            <img src="imagen.jpeg" alt="Pregunta" class="floating">
+        </div>
+        
+        <div class="buttons">
+            <button class="btn btn-yes" id="yes-btn">¡Sí!</button>
+            <button class="btn btn-no" id="no-btn">No</button>
+        </div>
+        
+        <div class="message" id="message"></div>
+    </div>
+    
+    <div class="container hidden" id="yes-container">
+        <h1>¡Goooooo! Vamos a ver una peli🎬<span class="heart">❤️</span></h1>
+        
+        <div class="image-container">
+            <img src="imagen1.jpeg" alt="Celebración" class="floating">
+        </div>
+        
+        <p>¡Espero que estés emocionada como yo! Te quiero mucho Sam</p>
+    </div>
+    
+    <div class="container hidden" id="no-container">
+        <h1>Pero... es buena idea <span class="heart">🥺</span></h1>
+         
+        <div class="image-container">
+            <img src="https://media.tenor.com/lXKKsl6ZSBcAAAAe/dudu-sad.png" alt="Triste" class="floating">
+        </div>
+        
+        <p>Di que sí... por favor...</p>
+        
+        <div class="buttons">
+            <button class="btn btn-yes" id="yes-btn-2">¡Sí!</button>
+            <button class="btn btn-no" id="no-btn-2">No</button>
+        </div>
+    </div>
+
+    <script>
+        const questionContainer = document.getElementById('question-container');
+        const yesContainer = document.getElementById('yes-container');
+        const noContainer = document.getElementById('no-container');
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const yesBtn2 = document.getElementById('yes-btn-2');
+        const noBtn2 = document.getElementById('no-btn-2');
+        const message = document.getElementById('message');
+        
+        let noCount = 0;
+        const messages = [
+            "Segura/o?",
+            "Piénsalo otra vez",
+            "Vamos, dale una oportunidad",
+            "No me hagas esto",
+            "Me romperás el corazón",
+            "Por favor...",
+            "Estoy empezando a llorar...",
+            "Eres cruel 😢"
+        ];
+        
+        yesBtn.addEventListener('click', () => {
+            questionContainer.classList.add('hidden');
+            yesContainer.classList.remove('hidden');
+            document.body.style.backgroundColor = "#e8f5e9";
+        });
+        
+        noBtn.addEventListener('mouseover', () => {
+            noCount++;
+            
+            if(noCount < messages.length) {
+                message.textContent = messages[noCount-1];
+            } else {
+                message.textContent = messages[messages.length-1];
+            }
+            
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth) - 100;
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight) - 100;
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        });
+        
+        noBtn.addEventListener('click', () => {
+            questionContainer.classList.add('hidden');
+            noContainer.classList.remove('hidden');
+            document.body.style.backgroundColor = "#fff3e0";
+        });
+        
+        yesBtn2.addEventListener('click', () => {
+            noContainer.classList.add('hidden');
+            yesContainer.classList.remove('hidden');
+            document.body.style.backgroundColor = "#e8f5e9";
+        });
+        
+        noBtn2.addEventListener('mouseover', () => {
+            
+            const x = Math.random() * (window.innerWidth - noBtn2.offsetWidth) - 100;
+            const y = Math.random() * (window.innerHeight - noBtn2.offsetHeight) - 100;
+            
+            noBtn2.style.position = 'absolute';
+            noBtn2.style.left = `${x}px`;
+            noBtn2.style.top = `${y}px`;
+        });
+    </script>
+</body>
+</html>
